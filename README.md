@@ -1,2 +1,4 @@
 # DV_Assignment
-Data Visualisation Assignment Semester 1 2024
+This repository is for the Data Visualisation Assignment in Semester 1 2024
+
+
