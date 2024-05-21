@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Data Visualization" />
+    <meta name="keywords" content="HTML, CSS, D3" />
+    <meta name="author" content="Garrich F H" />
+
+    <title>Line Chart</title>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="line.js"></script>
+    <link rel="stylesheet" href="line.css">
+
+</head>
+
+<body>
+    <h1>Line Chart ( GDP Spending % in Health )</h1>
+    <!-- Creating script to automatically generate text -->
+    <br>
+
+    <div id="container">
+        <div id="chart"></div>
+    
+    </div>
+    <div>
+        <button id="show-best-worst">Show Best Gain and Worst Loss</button>
+        <button id="show-top-three">Show Top 3</button>
+        <button id="show-bot-three">Show Bottom 3</button>
+    </div>
+    <div id="tooltip" class="tooltip" style="opacity: 0;"></div>
+
+
+    <footer style="color:grey">COS30045 Data Visualization<br>
+        Garrich Farrell Hardjojuwono</footer>
+</body>
+
+</html>

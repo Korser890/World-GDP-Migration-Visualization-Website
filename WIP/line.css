@@ -1,0 +1,62 @@
+.line {
+    fill: none;
+    stroke-width: 3px;
+    cursor: pointer;
+    stroke-opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.line.dimmed {
+    stroke-opacity: 0.1;
+}
+
+.line.selected {
+    stroke-width: 10px;
+}
+
+.axis-label {
+    font-size: 12px;
+}
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 8px;
+    font-size: 12px;
+    background: lightsteelblue;
+    border: 1px solid #000;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+#show-best-worst,
+#show-top-three,
+#show-bot-three {
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    transition: 0.4s;
+    background-color: #49a4ff;
+}
+
+#show-best-worst.clicked,
+#show-top-three.clicked,
+#show-bot-three.clicked {
+    color: white;
+    transition: 0.4s;
+    background-color: #20476d;
+}
+
+#container {
+    display: flex;
+
+    align-items: flex-start;
+}
+
+#chart {
+    display: inline-block;
+}
+
+#info {
+    margin-left: 20px;
+}
