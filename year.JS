@@ -1,13 +1,14 @@
 function initializeChart(years, country) {
     var barMargin = { top: 30, right: 30, bottom: 70, left: 60 },
-        barWidth = 800 - barMargin.left - barMargin.right,
-        barHeight = 400 - barMargin.top - barMargin.bottom;
+        barWidth = 550 - barMargin.left - barMargin.right,
+        barHeight = 520 - barMargin.top - barMargin.bottom;
 
     var barSvg = d3.select("#chart")
         .append("svg")
         .attr("id", "bar-svg")  // Add an ID to the bar chart's SVG
         .attr("width", barWidth + barMargin.left + barMargin.right)
         .attr("height", barHeight + barMargin.top + barMargin.bottom)
+        .attr("class", "dotted-border")
         .append("g")
         .attr("transform", "translate(" + barMargin.left + "," + barMargin.top + ")");
 
@@ -116,7 +117,7 @@ function updateChart(country, scales, years, values) {
 }
 
 function drawGraph(country) {
-    d3.csv("inflowtrial.csv").then(function (data) {
+    d3.csv("datas/inflowtrial.csv").then(function (data) {
         var countryData = data.filter(function (d) { return d["Country/year"] === country; })[0];
         var years = Object.keys(countryData).filter(function (key) { return key !== "Country/year"; });
         var values = years.map(function (year) { return +countryData[year]; });
@@ -126,10 +127,10 @@ function drawGraph(country) {
         } else {
             var scales = {
                 barSvg: d3.select("#bar-svg g"),
-                xScale: d3.scaleBand().domain(years).range([0, 800 - 60 - 30]).padding(0.2),
-                yScale: d3.scaleLinear().domain([0, 13000]).range([400 - 30 - 70, 0]),
-                barHeight: 400 - 30 - 70,
-                barWidth: 800 - 60 - 30,
+                xScale: d3.scaleBand().domain(years).range([0, 550 - 60 - 30]).padding(0.2),
+                yScale: d3.scaleLinear().domain([0, 13000]).range([520 - 30 - 70, 0]),
+                barHeight: 520 - 30 - 70,
+                barWidth: 550 - 60 - 30,
                 barMargin: { top: 30, right: 30, bottom: 70, left: 60 }
             };
         }
