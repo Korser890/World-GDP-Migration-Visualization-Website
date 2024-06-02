@@ -1,11 +1,11 @@
 function init() {
-    var w = 830; // width of the SVG
+    var w = 700; // width of the SVG
     var h = 500; // height of the SVG
 
     var projection = d3.geoNaturalEarth1()
                        .center([0, 0])
                        .translate([w / 2, h / 2])
-                       .scale(150);
+                       .scale(125);
 
     var path = d3.geoPath()
                  .projection(projection);
@@ -27,7 +27,7 @@ function init() {
 
 
     d3.json("world-geo-10m.json").then(function(world) {
-        d3.csv("datas/inflowtrial.csv").then(function(data) {
+        d3.csv("datas/inflowupdate.csv").then(function(data) {
             // Function to update the map based on the selected year
             function updateMap(year) {
                 var inflowYear = {};

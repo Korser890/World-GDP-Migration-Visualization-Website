@@ -13,7 +13,7 @@
     <script src="year.js"></script>
 
     <style>
-        body {
+body {
             background-color: #FFEED2;
             color: black;
             display: flex;
@@ -24,27 +24,29 @@
 
         nav {
             width: 100%;
-            background-color: #333;
+            background-color: #2C3E50;
             overflow: hidden;
             top: 0;
             left: 0;
             z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 250px;
         }
 
         nav a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
+            font-family: 'Lobster', cursive;
+            font-size: 20px; /* Increase font size */
+            color: #FFF8DC;
             text-align: center;
-            padding: 14px 16px;
+            padding: 20px 16px;
             text-decoration: none;
         }
 
         nav a:hover {
-            background-color: #ddd;
-            color: black;
+            color: #E6E6FA;
         }
-
         .container {
             display: flex;
             width: 100%;
@@ -60,7 +62,7 @@
         }
 
         #chart {
-            width: 30%;
+            width: 45%;
             height: auto;
         }
 
@@ -84,18 +86,34 @@
             width: 300px;
         }
 
+        .right {
+            display: flex;
+            gap: 16px;
+            margin-right: 250px; 
+        }
+        
+        .left {
+            margin-left: 250px; 
+        }
+
         footer {
             color: grey;
             text-align: center;
             margin-top: 20px;
         }
+
     </style>
 </head>
 <body>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="chloropleth.html">Map</a>
-        <a href="line.html">Line Chart</a>
+        <div class="left">
+        <a>Inflow of foreign doctors</a>
+        </div>
+        <div class="right">
+            <a href="index.html">Home</a>
+            <a href="chloropleth.html">Map</a>
+            <a href="line.html">Line Chart</a>
+        </div>
     </nav>
 
     <h1>Map and Inflow of Foreign Doctors</h1>
