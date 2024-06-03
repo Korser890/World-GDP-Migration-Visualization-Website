@@ -25,48 +25,62 @@ function init() {
 
     svg.call(zoom);
 
+    var tooltip = d3.select("body").append("div")
+                .attr("class", "tooltip")
 
     d3.json("world-geo-10m.json").then(function(world) {
         d3.csv("datas/inflowupdate.csv").then(function(data) {
-            // Function to update the map based on the selected year
             function updateMap(year) {
                 var inflowYear = {};
                 data.forEach(function(d) {
                     inflowYear[d['Country/year']] = +d[year];
                 });
 
-                // Determine the min and max values for the inflow in the selected year
                 var minInflow = d3.min(data, function(d) { return +d[year]; });
-                var maxInflow = 13000; // Set the max inflow to 13000 for the legend
+                var maxInflow = 13000;
 
-                // Define a color scale
                 var colorScale = d3.scaleLinear()
                                    .domain([minInflow, maxInflow])
-                                   .range(["#FFE5D1", "#EB3D00"]); // lighter to darker orange
+                                   .range(["#FFE5D1", "#EB3D00"]);
 
                 g.selectAll("path")
-                   .data(world.features)
-                   .join("path")
-                   .attr("d", path)
-                   .attr("fill", function(d) {
+                    .data(world.features)
+                    .join("path")
+                    .attr("d", path)
+                    .attr("fill", function(d) {
                        const countryName = d.properties && d.properties.name ? d.properties.name : null;
+                       console.log("Country Name: ", countryName); // Debugging line
                        return countryName && inflowYear[countryName] !== undefined ? colorScale(inflowYear[countryName]) : "#e5d6bd";
                    })
-                   .attr("stroke", function(d) {
+                    .attr("stroke", function(d) {
                        const countryName = d.properties && d.properties.name ? d.properties.name : null;
                        return countryName && inflowYear[countryName] !== undefined ? "black" : "white";
                    })
-                   .attr("stroke-width", 0.1) // Adjust the stroke width as needed
-                   .on("click", function(d) {
-                       const countryName = d.properties && d.properties.name ? d.properties.name : null;
-                       if (countryName) { 
-                           if (inflowYear[countryName] !== undefined) {
-                               drawGraph(countryName);
-                           }
-                       }
-                   });
-
-                // Update legend
+                    .attr("stroke-width", 0.1)
+                    .on("mouseout", function(d) {
+                        tooltip.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    })
+                    .on("click", function(d) {
+                        const countryName = d.properties && d.properties.name ? d.properties.name : null;
+                        if (countryName && inflowYear[countryName] !== undefined) {
+                            drawGraph(countryName);
+                            console.log("testclick");
+                        }
+                    })
+                    .on("mouseover", function(d) {
+                        var coords = d3.mouse(this); // 'this' refers to the SVG element being interacted with
+                        const countryName = d.properties && d.properties.name ? d.properties.name : null;
+                        if (countryName) {
+                            tooltip.transition()
+                                .duration(200)
+                                .style("opacity", 0.9);
+                            tooltip.html(countryName)
+                                .style("left", (coords[0]+100) + "px")
+                                .style("top", (coords[1]+200) + "px");
+                        }
+                    })
                 var legendWidth = 300;
                 var legendHeight = 10;
 
@@ -102,7 +116,7 @@ function init() {
                     .style("fill", "url(#legend-gradient)");
 
                 var legendScale = d3.scaleLinear()
-                    .domain([minInflow, 13000]) // Manually set domain to [minInflow, 13000]
+                    .domain([minInflow, 13000])
                     .range([0, legendWidth]);
 
                 var legendAxis = d3.axisBottom(legendScale)
@@ -118,10 +132,8 @@ function init() {
                     .call(legendAxis);
             }
 
-            // Initial map render for the default year (2017)
             updateMap("2017");
 
-            // Event listener for the year slider
             d3.select("#year-slider").on("input", function() {
                 var selectedYear = this.value;
                 d3.select("#selected-year").text(selectedYear);

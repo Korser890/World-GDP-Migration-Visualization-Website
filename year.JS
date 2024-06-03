@@ -117,7 +117,7 @@ function updateChart(country, scales, years, values) {
 }
 
 function drawGraph(country) {
-    d3.csv("datas/inflowtrial.csv").then(function (data) {
+    d3.csv("datas/inflowupdate.csv").then(function (data) {
         var countryData = data.filter(function (d) { return d["Country/year"] === country; })[0];
         var years = Object.keys(countryData).filter(function (key) { return key !== "Country/year"; });
         var values = years.map(function (year) { return +countryData[year]; });
