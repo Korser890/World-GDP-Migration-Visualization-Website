@@ -1,7 +1,8 @@
 function init() {
-    const w = window.innerWidth * 0.7, h = window.innerHeight * 0.7, number_of_ticks = 20;
-    const margin = { top: window.innerHeight * 0.05, right: window.innerWidth - w, bottom: window.innerHeight * 0.05, left: window.innerWidth * 0.05 };
-
+    const w = window.innerWidth * 0.6;
+    const h = window.innerHeight * 0.6;
+    const number_of_ticks = 20;
+    const margin = { top: window.innerHeight * 0.05, right: window.innerWidth - w, bottom: window.innerHeight * 0.07 + 5, left: window.innerWidth * 0.4 };
     let selectedCountry = null;
     let transformedData = {};
     let countries = [];
@@ -20,6 +21,45 @@ function init() {
             transformedData[country].forEach(entry => years.add(entry.year));
         });
 
+        // Initialize the multiselect dropdown
+        const select = d3.select("#country-select")
+            .selectAll("option")
+            .data(countries)
+            .enter()
+            .append("option")
+            .text(d => d)
+            .attr("value", d => d);
+
+        const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(countries);
+        
+        // Initialize the selectize plugin and store the instance reference
+        const selectizeInstance = $('#country-select').selectize({
+            plugins: ['remove_button'],
+            items: countries, // Prefill with all countries
+            onInitialize: function () {
+                const selectize = this;
+                countries.forEach(country => {
+                    selectize.addItem(country);
+                });
+            },
+            onChange: function (value) {
+                let selectedCountries = value;
+                updateChart(selectedCountries);
+            },
+            render: {
+                item: function (data, escape) {
+                    const color = colorScale(data.value);
+                    return `<div style="background-color:${color}; color:white;">${escape(data.text)}</div>`;
+                },
+                option: function (data, escape) {
+                    return `<div>${escape(data.text)}</div>`;
+                }
+            }
+        });
+
+        const selectizeControl = selectizeInstance[0].selectize;
+
+        // Create SVG
         const svg = d3.select("#chart").append("svg")
             .attr("width", w + margin.left + margin.right)
             .attr("height", h + margin.top + margin.bottom)
@@ -37,21 +77,19 @@ function init() {
             ])
             .range([h, 0]);
 
-        const colorScale = d3.scaleOrdinal(d3.schemeCategory10).domain(countries);
-
         const xAxis = d3.axisBottom(xScale).tickValues(Array.from(years)).tickFormat(d3.format("d"));
         const yAxis = d3.axisLeft(yScale).ticks(number_of_ticks);
 
-        //draw X Axis
+        // Draw X Axis
         svg.append("g").attr("class", "x axis").attr("transform", `translate(0,${h})`).call(xAxis);
-        //draw y Axis
+        // Draw Y Axis
         svg.append("g").attr("class", "y axis").call(yAxis);
-        //draw x axis label
-        svg.append("text").attr("class", "axis-label").attr("x", w / 2).attr("y", h + margin.bottom - 5)
+        // Draw X Axis label
+        svg.append("text").attr("class", "axis-label").attr("x", w / 2).attr("y", h + 40)
             .style("text-anchor", "middle").text("Year");
-        //draw y axis label
+        // Draw Y Axis label
         svg.append("text").attr("class", "axis-label").attr("transform", "rotate(-90)")
-            .attr("x", -h / 2).attr("y", -margin.left + 15)
+            .attr("x", -h / 2).attr("y", -40)
             .style("text-anchor", "middle").text("GDP (%)");
 
         const line = d3.line()
@@ -64,17 +102,14 @@ function init() {
             svg.selectAll(".line").remove();
             svg.selectAll(".label").remove();
 
-            // Calculate new y-axis domain based on selected countries' data
             const selectedData = selectedCountries.flatMap(country => transformedData[country]);
-            const newYDomain = [
-                d3.min(selectedData, d => d.value),
-                d3.max(selectedData, d => d.value)
-            ];
+            // const newYDomain = [
+            //     d3.min(selectedData, d => d.value),
+            //     d3.max(selectedData, d => d.value)
+            // ];
 
-            yScale.domain(newYDomain);
-            // Update the y-axis with the new domain
+            // yScale.domain(newYDomain);
             svg.select(".y.axis").transition().duration(1000).call(yAxis.scale(yScale));
-
 
             selectedCountries.forEach(country => {
                 const countryData = transformedData[country];
@@ -85,72 +120,92 @@ function init() {
                     .attr("stroke", highlight && country === highlight.bestCountry ? "green" : highlight && country === highlight.worstCountry ? "red" : colorScale(country))
                     .attr("fill", "none")
                     .attr("stroke-width", 2)
-                    .style("opacity", 1); // Ensure the line is visible
+                    .style("opacity", 1);
 
-                // Get the total length of the path
                 const totalLength = path.node().getTotalLength();
 
-                // Set up the line's initial state for the transition
-                path.attr("stroke-dasharray", `${totalLength} ${totalLength}`) // Set dash pattern
-                    .attr("stroke-dashoffset", totalLength) // Hide the entire path
+                path.attr("stroke-dasharray", `${totalLength} ${totalLength}`)
+                    .attr("stroke-dashoffset", totalLength)
                     .transition()
-                    .duration(1000) // Transition duration: 1 second
-                    .attr("stroke-dashoffset", 0); // Draw the path from left to right
+                    .duration(1000)
+                    .attr("stroke-dashoffset", 0);
 
                 path.on("mouseover", (event, d) => {
                     if (selectedCountry === country) {
                         tooltip.transition().duration(200).style("opacity", .9);
                     }
                 })
-                    .on("mousemove", (event, d) => {
-                        if (selectedCountry === country) {
-                            const year = Math.round(xScale.invert(d3.pointer(event)[0]));
-                            const yearData = countryData.find(v => v.year === year);
-                            if (yearData) {
-                                tooltip.html(`Country: ${country}<br>Year: ${yearData.year}<br>GDP: ${yearData.value}`)
-                                    .style("left", (event.pageX + 5) + "px")
-                                    .style("top", (event.pageY - 28) + "px");
-                            }
+                .on("mousemove", (event, d) => {
+                    if (selectedCountry === country) {
+                        const year = Math.round(xScale.invert(d3.pointer(event)[0]));
+                        const yearData = countryData.find(v => v.year === year);
+                        if (yearData) {
+                            tooltip.html(`Country: ${country}<br>Year: ${yearData.year}<br>GDP: ${yearData.value}`)
+                                .style("left", (event.pageX + 5) + "px")
+                                .style("top", (event.pageY - 28) + "px");
                         }
-                    })
-                    .on("mouseout", (event, d) => {
-                        if (selectedCountry === country) {
-                            tooltip.transition().duration(500).style("opacity", 0);
-                        }
-                    })
-                    .on("click", function (event, d) {
-                        // event.stopPropagation();
-                        if (selectedCountry === country) {
-                            selectedCountry = null;
-                            svg.selectAll(".line")
-                                .classed("dimmed", false)
-                                .classed("selected", false);
-                            tooltip.transition().duration(500).style("opacity", 0);
-                        } else {
-                            selectedCountry = country;
-                            console.log("click")
-                            svg.selectAll(".line")
-                                .classed("dimmed", d => d !== countryData)
-                                .classed("selected", d => d === countryData);
-                        }
-                    });
+                    }
+                })
+                .on("mouseout", (event, d) => {
+                    if (selectedCountry === country) {
+                        tooltip.transition().duration(500).style("opacity", 0);
+                    }
+                })
+                .on("click", function (event, d) {
+                    if (selectedCountry === country) {
+                        selectedCountry = null;
+                        svg.selectAll(".line")
+                            .classed("dimmed", false)
+                            .classed("selected", false);
+                        tooltip.transition().duration(500).style("opacity", 0);
+                    } else {
+                        selectedCountry = country;
+                        svg.selectAll(".line")
+                            .classed("dimmed", d => d !== countryData)
+                            .classed("selected", d => d === countryData);
+                    }
+                });
+
+                // Array to store label positions
+                const labelPositions = [];
 
                 const appendLabel = (text, x, y, color) => {
+                    // Adjust the position if it overlaps with existing labels
+                    let adjustedY = y;
+                    let overlap = true;
+
+                    while (overlap) {
+                        overlap = false;
+                        labelPositions.forEach(pos => {
+                            if (Math.abs(pos.x - x) < 50 && Math.abs(pos.y - adjustedY) < 20) {
+                                adjustedY += 20; // Adjust the y position to avoid overlap
+                                overlap = true;
+                            }
+                        });
+                    }
+
+                    // Store the new label position
+                    labelPositions.push({ x, y: adjustedY });
+
+                    // Append the label to the SVG
                     svg.append("text")
                         .attr("class", "label")
                         .attr("x", x)
-                        .attr("y", y)
+                        .attr("y", adjustedY)
                         .attr("fill", color)
                         .text(text)
-                        .style("opacity", 0) // Start with opacity 0
+                        .style("opacity", 0)
                         .transition()
                         .duration(200)
-                        .delay(1000) // Delay the label transition until the line is drawn
-                        .style("opacity", 1); // Transition to opacity 1
+                        .delay(1000)
+                        .style("opacity", 1);
                 };
 
+                // Assuming this block of code is inside a loop iterating over countries
                 if (highlight) {
-                    const color = country === highlight.bestCountry ? "green" : country === highlight.worstCountry ? "red" : colorScale(country);
+                    const color = country === highlight.bestCountry ? "green" :
+                        country === highlight.worstCountry ? "red" :
+                            colorScale(country);
                     const xPos = xScale(countryData[countryData.length - 1].year) + 5;
                     const yPos = yScale(countryData[countryData.length - 1].value);
 
@@ -167,71 +222,6 @@ function init() {
                     }
                 }
 
-                // if (highlight) {
-                //     const color = country === highlight.bestCountry ? "green" : country === highlight.worstCountry ? "red" : colorScale(country);
-
-                //     if (country === highlight.bestCountry) {
-                //         svg.append("text")
-                //             .attr("class", "label")
-                //             .attr("x", xScale(countryData[countryData.length - 1].year) + 5)
-                //             .attr("y", yScale(countryData[countryData.length - 1].value))
-                //             .attr("fill", color)
-                //             .text(`Best Gain: ${country} (Gain: ${highlight.bestGain})`)
-                //             .style("opacity", 0) // Start with opacity 0
-                //             .transition()
-                //             .duration(200)
-                //             .delay(1000) // Delay the label transition until the line is drawn
-                //             .style("opacity", 1); // Transition to opacity 1
-                //     } else if (country === highlight.worstCountry) {
-                //         svg.append("text")
-                //             .attr("class", "label")
-                //             .attr("x", xScale(countryData[countryData.length - 1].year) + 5)
-                //             .attr("y", yScale(countryData[countryData.length - 1].value))
-                //             .attr("fill", color)
-                //             .text(`Worst Loss: ${country} (Loss: ${highlight.worstLoss})`)
-                //             .style("opacity", 0) // Start with opacity 0
-                //             .transition()
-                //             .duration(200)
-                //             .delay(1000) // Delay the label transition until the line is drawn
-                //             .style("opacity", 1); // Transition to opacity 1
-                //     } else if (country === highlight.first) {
-                //         svg.append("text")
-                //             .attr("class", "label")
-                //             .attr("x", xScale(countryData[countryData.length - 1].year) + 5)
-                //             .attr("y", yScale(countryData[countryData.length - 1].value))
-                //             .attr("fill", color)
-                //             .text(`${country} (GDP: ${highlight.firstScore})`)
-                //             .style("opacity", 0) // Start with opacity 0
-                //             .transition()
-                //             .duration(200)
-                //             .delay(1000) // Delay the label transition until the line is drawn
-                //             .style("opacity", 1); // Transition to opacity 1
-                //     } else if (country === highlight.second) {
-                //         svg.append("text")
-                //             .attr("class", "label")
-                //             .attr("x", xScale(countryData[countryData.length - 1].year) + 5)
-                //             .attr("y", yScale(countryData[countryData.length - 1].value))
-                //             .attr("fill", color)
-                //             .text(`${country} (GDP: ${highlight.secondScore})`)
-                //             .style("opacity", 0) // Start with opacity 0
-                //             .transition()
-                //             .duration(200)
-                //             .delay(1000) // Delay the label transition until the line is drawn
-                //             .style("opacity", 1); // Transition to opacity 1
-                //     } else if (country === highlight.third) {
-                //         svg.append("text")
-                //             .attr("class", "label")
-                //             .attr("x", xScale(countryData[countryData.length - 1].year) + 5)
-                //             .attr("y", yScale(countryData[countryData.length - 1].value))
-                //             .attr("fill", color)
-                //             .text(`${country} (GDP: ${highlight.thirdScore})`)
-                //             .style("opacity", 0) // Start with opacity 0
-                //             .transition()
-                //             .duration(200)
-                //             .delay(1000) // Delay the label transition until the line is drawn
-                //             .style("opacity", 1); // Transition to opacity 1
-                //     }
-                // }
             });
         };
 
@@ -245,11 +235,11 @@ function init() {
                 const countryData = transformedData[country];
                 const gain = countryData[countryData.length - 1].value - countryData[0].value;
                 if (gain > bestGain) {
-                    bestGain = gain.toFixed(1); //Round to 1 decimal point
+                    bestGain = gain.toFixed(1);
                     bestCountry = country;
                 }
                 if (gain < worstLoss) {
-                    worstLoss = gain.toFixed(1); //Round to 1 decimal point
+                    worstLoss = gain.toFixed(1);
                     worstCountry = country;
                 }
             });
@@ -266,11 +256,6 @@ function init() {
 
             let [first, second, third] = topThree.map(d => d.country);
             let [firstScore, secondScore, thirdScore] = topThree.map(d => d.score);
-
-            // console.log(first, firstScore);
-            // console.log(second, secondScore);
-            // console.log(third, thirdScore);
-
             return { first, second, third, firstScore, secondScore, thirdScore };
         };
 
@@ -284,21 +269,17 @@ function init() {
             let [first, second, third] = bottomThree.map(d => d.country);
             let [firstScore, secondScore, thirdScore] = bottomThree.map(d => d.score);
 
-            // console.log(first, firstScore);
-            // console.log(second, secondScore);
-            // console.log(third, thirdScore);
-
             return { first, second, third, firstScore, secondScore, thirdScore };
         };
+
         const best_worst_gain_button = d3.select("#show-best-worst");
         const top_three_button = d3.select("#show-top-three");
         const bot_three_button = d3.select("#show-bot-three");
+
         d3.select("#show-best-worst").on("click", () => {
-            // Remove "clicked" class from other buttons
-            best_worst_gain_button.classed("clicked", !best_worst_gain_button.classed("clicked")); // Toggle 'clicked' class
+            best_worst_gain_button.classed("clicked", !best_worst_gain_button.classed("clicked"));
             top_three_button.classed("clicked", false);
             bot_three_button.classed("clicked", false);
-            // top_three_button.classed("clicked", !top_three_button.classed("clicked")); // Toggle 'clicked' class
 
             showBestWorst = !showBestWorst;
             showTopThree = false;
@@ -306,15 +287,19 @@ function init() {
             if (showBestWorst) {
                 const { bestCountry, worstCountry, bestGain, worstLoss } = calculateBestAndWorst();
                 updateChart([bestCountry, worstCountry], { bestCountry, worstCountry, bestGain, worstLoss });
+                selectizeControl.clear();
+                selectizeControl.addItems([bestCountry, worstCountry]);
             } else {
                 updateChart(countries);
+                selectizeControl.clear();
+                selectizeControl.addItems(countries);
                 d3.select("#info").html('');
             }
         });
+
         d3.select("#show-top-three").on("click", () => {
-            // const button = d3.select("#show-top-three");
             best_worst_gain_button.classed("clicked", false);
-            top_three_button.classed("clicked", !top_three_button.classed("clicked")); // Toggle 'clicked' class
+            top_three_button.classed("clicked", !top_three_button.classed("clicked"));
             bot_three_button.classed("clicked", false);
 
             showBestWorst = false;
@@ -323,16 +308,20 @@ function init() {
             if (showTopThree) {
                 const { first, second, third, firstScore, secondScore, thirdScore } = calculateTopThree();
                 updateChart([first, second, third], { first, second, third, firstScore, secondScore, thirdScore });
+                selectizeControl.clear();
+                selectizeControl.addItems([first, second, third]);
             } else {
                 updateChart(countries);
+                selectizeControl.clear();
+                selectizeControl.addItems(countries);
                 d3.select("#info").html('');
             }
         });
+
         d3.select("#show-bot-three").on("click", () => {
-            // const button = d3.select("#show-bot-three");
             best_worst_gain_button.classed("clicked", false);
             top_three_button.classed("clicked", false);
-            bot_three_button.classed("clicked", !bot_three_button.classed("clicked")); // Toggle 'clicked' class
+            bot_three_button.classed("clicked", !bot_three_button.classed("clicked"));
 
             showBestWorst = false;
             showTopThree = false;
@@ -340,13 +329,16 @@ function init() {
             if (showBotThree) {
                 const { first, second, third, firstScore, secondScore, thirdScore } = calculateBottomThree();
                 updateChart([first, second, third], { first, second, third, firstScore, secondScore, thirdScore });
+                selectizeControl.clear();
+                selectizeControl.addItems([first, second, third]);
             } else {
                 updateChart(countries);
+                selectizeControl.clear();
+                selectizeControl.addItems(countries);
                 d3.select("#info").html('');
             }
         });
 
-        // Click out of the path to remove the selection function
         svg.append("rect")
             .attr("width", w)
             .attr("height", h)
