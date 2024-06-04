@@ -89,29 +89,32 @@
 
         .questions {
             width: 100%;
-            background-color: #f4f4f4;
-            margin-left: auto;
             background-color: #807768;
 
         }
 
+
         .visualizations {
             display: flex;
             justify-content: space-around;
-            margin: 20px;
+            /* margin: 20px; */
         }
 
         .visualization {
             width: 100%;
-            background-color: #ddd;
-            padding: 20px;
+            background-color: #807768;
+            padding: 15px;
             text-align: center;
         }
         
         .qlist {
             color: #FFF8DC;
-        }
+        }   
 
+        .visualization img{
+            width: 100%;
+        }
+    
     </style>
 </head>
 
@@ -161,25 +164,27 @@
             </section>
         </div>
         <div class="image">
-            <img src="dr.png" alt="Example Image">
+            <img src="pics/dr.png" alt="Example Image">
         </div>
     </section>
 
     <section class="questions">
+        <div class="questionBody">
         <h2 class="qlist">Questions the visualization aims to answer:</h2>
         <ul>
             <li class="qlist">Is there a correlation between a country’s healthcare GDP spending and the number of inflows of foreign doctors towards the country? </li>
             <li class="qlist">Were there any changes in the rate of inflow of foreign doctors in each country between pre-covid and post-covid? </li>
             <li class="qlist">What role does GDP spending on healthcare play in the retention of domestically trained health workforce workers versus the attraction of foreign-trained ones? </li>
         </ul>
+    </div>
     </section>
 
     <section class="visualizations">
         <div class="visualization">
-            Screenshot Visualization 1
+            <img src="pics/chloropleth.jpeg" alt="Example Image">
         </div>
         <div class="visualization">
-            Screenshot Visualization 2
+            <img src="pics/line.jpeg" alt="Example Image">
         </div>
     </section>
 
