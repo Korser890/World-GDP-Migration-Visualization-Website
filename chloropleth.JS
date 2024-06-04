@@ -70,17 +70,32 @@ function init() {
                         }
                     })
                     .on("mouseover", function(d) {
-                        var coords = d3.mouse(this); // 'this' refers to the SVG element being interacted with
                         const countryName = d.properties && d.properties.name ? d.properties.name : null;
                         if (countryName) {
-                            tooltip.transition()
-                                .duration(200)
-                                .style("opacity", 0.9);
-                            tooltip.html(countryName)
-                                .style("left", (coords[0]+50) + "px")
-                                .style("top", (coords[1]+250) + "px");
+                            var centroid = path.centroid(d); // Calculate the centroid of the country
+                            var bounds = path.bounds(d); // Get the bounding box of the country
+                            var width = bounds[1][0] - bounds[0][0]; // Calculate the width of the bounding box
+                            var height = bounds[1][1] - bounds[0][1]; // Calculate the height of the bounding box
+                            var area = width * height; // Calculate the area of the bounding box
+                            var fontSize = Math.max(3, Math.min(12, Math.sqrt(area) / 10)); // Dynamic font size calculation
+                    
+                            g.append("text")
+                                .attr("class", "country-label")  // Assign a class for styling and easy removal
+                                .attr("x", centroid[0])
+                                .attr("y", centroid[1])
+                                .attr("text-anchor", "middle")  // Center the text at the centroid
+                                .attr("alignment-baseline", "central")
+                                .style("font-size", fontSize + "px")  // Adjust font size dynamically
+                                .style("font-weight", "bold")
+                                .style("fill", "black")  // Text color
+                                .text(countryName);
                         }
                     })
+                    
+                    .on("mouseout", function() {
+                        g.select(".country-label").remove();  // Remove the text label on mouseout
+                    });
+                    
                 var legendWidth = 300;
                 var legendHeight = 10;
 
