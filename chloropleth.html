@@ -24,7 +24,7 @@ body {
 
         nav {
             width: 100%;
-            background-color: #2C3E50;
+            background-color: #807768;
             overflow: hidden;
             top: 0;
             left: 0;
@@ -44,9 +44,10 @@ body {
             text-decoration: none;
         }
 
-        nav a:hover {
-            color: #E6E6FA;
+        .hyper:hover {
+            color: #E6E6FA;  
         }
+
         .container {
             display: flex;
             width: 100%;
@@ -101,11 +102,11 @@ body {
         .tooltip {
             position: absolute;
             text-align: center;
-            width: 120px;
+            width: 60px;
             height: 28px;
             padding: 2px;
-            font: 12px sans-serif;
-            background: lightsteelblue;
+            font: 10px sans-serif;
+            background: #EB3D00;
             border: 0px;
             border-radius: 8px;
             pointer-events: none;  
@@ -118,6 +119,12 @@ body {
             margin-top: 20px;
         }
 
+        .country-label {
+            pointer-events: none; 
+            opacity: 0.8; 
+            font-family: 'Lobster', cursive;
+        }
+
         
 
     </style>
@@ -128,16 +135,17 @@ body {
         <a>Inflow of foreign doctors</a>
         </div>
         <div class="right">
-            <a href="index.html">Home</a>
-            <a href="chloropleth.html">Map</a>
-            <a href="line.html">Line Chart</a>
+            <a class = "hyper" href="index.html">Home</a>
+            <a class = "hyper" href="chloropleth.html">Map</a>
+            <a class = "hyper" href="line.html">Line Chart</a>
         </div>
     </nav>
 
-    <h1>Map and Inflow of Foreign Doctors</h1>
+    <h1>Map and Inflow of Foreign Doctors to OECD countries</h1>
     <div id="slider-container">
         <label for="year-slider">Year: <span id="selected-year">2017</span></label>
         <input type="range" id="year-slider" min="2010" max="2021" value="2017" step="1" />
+        
     </div>
     <div class="container">
         <div id="map" class="dotted-border"></div>

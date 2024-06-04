@@ -21,7 +21,7 @@
 
         nav {
             width: 100%;
-            background-color: #2C3E50;
+            background-color: #807768;
             top: 0;
             left: 0;
             z-index: 1000;
@@ -39,14 +39,16 @@
             text-decoration: none;
         }
 
-        nav a:hover {
-            color: #E6E6FA;
+
+        .hyper:hover {
+            color: #E6E6FA;  
         }
 
         .right {
             display: flex;
             gap: 16px;
             margin-right: 250px; 
+            
         }
         
         .left {
@@ -70,12 +72,12 @@
 <body>
     <nav>
         <div class="left">
-        <a>Inflow of foreign doctors</a>
+        <a id = "inflowtext">Inflow of foreign doctors</a>
         </div>
         <div class="right">
-            <a href="index.html">Home</a>
-            <a href="chloropleth.html">Map</a>
-            <a href="line.html">Line Chart</a>
+            <a class = "hyper" href="index.html">Home</a>
+            <a class = "hyper" href="chloropleth.html">Map</a>
+            <a class = "hyper" href="line.html">Line Chart</a>
         </div>
     </nav>
 
