@@ -36,10 +36,6 @@ nav a:hover {
     color: #E6E6FA;
 }
 
-h1 {
-    margin-top: 60px; /* Add margin to compensate for the fixed navbar height */
-}
-
 .right {
     display: flex;
     gap: 16px;
@@ -71,7 +67,7 @@ h1 {
 }
 
 .line.dimmed {
-    stroke-opacity: 0.1;
+    stroke-opacity: 0.2;
 }
 
 .line.selected {
@@ -111,15 +107,30 @@ h1 {
     background-color: #20476d;
 }
 
-#container {
-    display: flex;
-    align-items: flex-start;
-}
-
-#chart {
-    display: inline-block;
-}
 
 #info {
     margin-left: 20px;
+}
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#interactive-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#buttons {
+    margin-right: 20px; /* Adjust the margin as needed */
+}
+
+#controls {
+    margin-left: 20px; /* Adjust the margin as needed */
+}
+
+.selectize-control {
+    width: 350px; /* Set your desired width */
 }
