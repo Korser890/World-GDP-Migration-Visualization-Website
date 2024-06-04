@@ -31,8 +31,8 @@
         }
 
         nav a {
-            font-family: 'Lobster', cursive;
-            font-size: 20px;
+            font-family: "Arial";
+            font-size: 28px;
             color: #FFF8DC;
             text-align: center;
             padding: 20px 16px;
@@ -40,7 +40,7 @@
         }
 
         .hyper:hover {
-            color: #E6E6FA;
+            color: red;
         }
 
         .right {
@@ -93,6 +93,9 @@
 
         }
 
+        .qlist {
+            color: #FFF8DC;
+        }
 
         .visualizations {
             display: flex;
@@ -101,20 +104,29 @@
         }
 
         .visualization {
+            margin-top: 15px;
             width: 100%;
-            background-color: #807768;
-            padding: 15px;
+            background-color: #FFEED2;
+            padding: 15p 15px 15px 15px;
             text-align: center;
         }
-        
-        .qlist {
-            color: #FFF8DC;
-        }   
 
-        .visualization img{
-            width: 100%;
+        .visualization:hover {
+            padding: 5px 5px 5px 5px;
+            transition: 0.2s;
         }
-    
+
+
+        .visualization img {
+            width: 90%;
+            box-shadow: 0 0 10px black;
+        }
+
+        .visualization img:hover {
+            transition: 0.2s;
+            width: 95%;
+            box-shadow: 0 0 25px #EB3D00;
+        }
     </style>
 </head>
 
@@ -124,7 +136,7 @@
             <a id="inflowtext">Inflow of foreign doctors</a>
         </div>
         <div class="right">
-            <a class="hyper" href="index.html">Home</a>
+            <a class="hyper" href="index.html" style="color: red;">Home</a>
             <a class="hyper" href="chloropleth.html">Map</a>
             <a class="hyper" href="line.html">Line Chart</a>
         </div>
@@ -139,27 +151,41 @@
             </header>
             <section>
                 <h2>Purpose of the visualizations in the website</h2>
-                <p>This website aims to provide visualization and insights on the influx of foreign-trained doctors and the healthcare spending of OECD nations:</p>
+                <p>This website aims to provide visualization and insights on the influx of foreign-trained doctors and
+                    the healthcare spending of OECD nations:</p>
                 <ul>
-                    <li><strong>Inform Policy Development:</strong> The visualization helps policymakers identify trends in healthcare worker migration and spending, aiding in the development of policies that balance domestic workforce retention with the attraction of international talent.</li>
-                    <li><strong>Career Insight for Healthcare Professionals:</strong> The visualization aims to provide healthcare workers with clear data on global healthcare investment and demand, supporting informed decisions about potential career moves and opportunities abroad.</li>
+                    <li><strong>Inform Policy Development:</strong> The visualization helps policymakers identify trends
+                        in healthcare worker migration and spending, aiding in the development of policies that balance
+                        domestic workforce retention with the attraction of international talent.</li>
+                    <li><strong>Career Insight for Healthcare Professionals:</strong> The visualization aims to provide
+                        healthcare workers with clear data on global healthcare investment and demand, supporting
+                        informed decisions about potential career moves and opportunities abroad.</li>
                 </ul>
             </section>
             <section>
                 <h2>Features of the Visualization Tool</h2>
-                <p>The features in the visualizations provided in this website would are equipped with features that will help viewers to gain better insights into the data:</p>
+                <p>The features in the visualizations provided in this website would are equipped with features that
+                    will help viewers to gain better insights into the data:</p>
                 <ul>
-                    <li><strong>Interactive Chloropleth Maps and Bar Graph:</strong>Enable users to delve into specific country data, offering a detailed view of both the inflow of foreign trained doctors into OECD countries, highlighting migration patterns and trends over time</li>
-                    <li><strong>Line Chart: </strong> Enable users to track and analyze the historical trends in healthcare spending as a percentage of GDP, highlighting how different countries prioritize healthcare over the years</li>
+                    <li><strong>Interactive Chloropleth Maps and Bar Graph:</strong>Enable users to delve into specific
+                        country data, offering a detailed view of both the inflow of foreign trained doctors into OECD
+                        countries, highlighting migration patterns and trends over time</li>
+                    <li><strong>Line Chart: </strong> Enable users to track and analyze the historical trends in
+                        healthcare spending as a percentage of GDP, highlighting how different countries prioritize
+                        healthcare over the years</li>
                 </ul>
             </section>
             <section>
                 <h2>Benefits of the Visualization Tool</h2>
-                <p>This visualization tool would offer several benefits to healthcare students and professionals planning their careers:</p>
+                <p>This visualization tool would offer several benefits to healthcare students and professionals
+                    planning their careers:</p>
                 <ul>
-                    <li><strong>Informed Decision Making:</strong> Access to comprehensive, up-to-date data aids in making informed decisions about where to pursue career opportunities.</li>
-                    <li><strong>Strategic Planning:</strong> Understanding global trends helps in planning long-term career paths and professional development.</li>
-                    <li><strong>Networking Opportunities:</strong> Identifying regions with a high influx of professionals can highlight networking and collaboration opportunities.</li>
+                    <li><strong>Informed Decision Making:</strong> Access to comprehensive, up-to-date data aids in
+                        making informed decisions about where to pursue career opportunities.</li>
+                    <li><strong>Strategic Planning:</strong> Understanding global trends helps in planning long-term
+                        career paths and professional development.</li>
+                    <li><strong>Networking Opportunities:</strong> Identifying regions with a high influx of
+                        professionals can highlight networking and collaboration opportunities.</li>
                 </ul>
             </section>
         </div>
@@ -170,21 +196,24 @@
 
     <section class="questions">
         <div class="questionBody">
-        <h2 class="qlist">Questions the visualization aims to answer:</h2>
-        <ul>
-            <li class="qlist">Is there a correlation between a country’s healthcare GDP spending and the number of inflows of foreign doctors towards the country? </li>
-            <li class="qlist">Were there any changes in the rate of inflow of foreign doctors in each country between pre-covid and post-covid? </li>
-            <li class="qlist">What role does GDP spending on healthcare play in the retention of domestically trained health workforce workers versus the attraction of foreign-trained ones? </li>
-        </ul>
-    </div>
+            <h2 class="qlist">Questions the visualization aims to answer:</h2>
+            <ul>
+                <li class="qlist">Is there a correlation between a country’s healthcare GDP spending and the number of
+                    inflows of foreign doctors towards the country? </li>
+                <li class="qlist">Were there any changes in the rate of inflow of foreign doctors in each country
+                    between pre-covid and post-covid? </li>
+                <li class="qlist">What role does GDP spending on healthcare play in the retention of domestically
+                    trained health workforce workers versus the attraction of foreign-trained ones? </li>
+            </ul>
+        </div>
     </section>
 
     <section class="visualizations">
         <div class="visualization">
-            <img src="pics/chloropleth.jpeg" alt="Example Image">
+            <a href="chloropleth.html"><img src="pics/chloropleth.jpeg" alt="chloropleth map Image"></a>
         </div>
         <div class="visualization">
-            <img src="pics/line.jpeg" alt="Example Image">
+            <a href="line.html"><img src="pics/line.jpeg" alt="line chart Image"></a>
         </div>
     </section>
 

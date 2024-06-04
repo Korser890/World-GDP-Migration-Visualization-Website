@@ -24,16 +24,16 @@ nav {
 }
 
 nav a {
-    font-family: 'Lobster', cursive;
-    font-size: 20px; /* Increase font size */
+    font-family: "Arial";
+    font-size: 28px;
     color: #FFF8DC;
     text-align: center;
     padding: 20px 16px;
     text-decoration: none;
 }
 
-nav a:hover {
-    color: #E6E6FA;
+.hyper:hover {
+    color: red;
 }
 
 .right {
