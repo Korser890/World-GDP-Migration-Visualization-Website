@@ -1,5 +1,5 @@
 function init() {
-    var w = window.innerWidth * 0.6; // width of the SVG
+    var w = window.innerWidth * 0.5; // width of the SVG
     var h = window.innerHeight * 0.65; // height of the SVG
     var margin = { top: 30, right: 30, bottom: 0, left: 30 };
 
