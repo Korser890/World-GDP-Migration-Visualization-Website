@@ -49,7 +49,7 @@ function init() {
                     .attr("d", path)
                     .attr("fill", function(d) {
                        const countryName = d.properties && d.properties.name ? d.properties.name : null;
-                       console.log("Country Name: ", countryName); // Debugging line
+                    //    console.log("Country Name: ", countryName); // Debugging line
                        return countryName && inflowYear[countryName] !== undefined ? colorScale(inflowYear[countryName]) : "#e5d6bd";
                    })
                     .attr("stroke", function(d) {
@@ -66,7 +66,7 @@ function init() {
                         const countryName = d.properties && d.properties.name ? d.properties.name : null;
                         if (countryName && inflowYear[countryName] !== undefined) {
                             drawGraph(countryName);
-                            console.log("testclick");
+                            // console.log("testclick");
                         }
                     })
                     .on("mouseover", function(d) {

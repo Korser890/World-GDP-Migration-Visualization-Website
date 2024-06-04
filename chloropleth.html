@@ -124,7 +124,47 @@ body {
             font-family: 'Lobster', cursive;
         }
 
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 5px;  
+            background: black;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: opacity 0.2s;
+            transition: opacity 0.2s;
+        }
         
+        .slider:hover {
+            opacity: 1; /* Increase opacity on hover for better visibility */
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%; 
+            background: #EB3D00;
+            cursor: pointer;
+            -webkit-transition: background 0.2s;
+            transition: background 0.2s;
+        }
+        
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #EB3D00;
+            cursor: pointer;
+            -webkit-transition: background 0.2s;
+            transition: background 0.2s;
+        }
+        .slider::-webkit-slider-thumb:hover,
+.slider::-moz-range-thumb:hover {
+    background: #FF5733; /* Change thumb color on hover for better feedback */
+}
 
     </style>
 </head>
@@ -143,7 +183,8 @@ body {
     <h1>Map and Inflow of Foreign Doctors to OECD countries</h1>
     <div id="slider-container">
         <label for="year-slider">Year: <span id="selected-year">2017</span></label>
-        <input type="range" id="year-slider" min="2010" max="2021" value="2017" step="1" />
+        <input class="slider" type="range" id="year-slider" min="2010" max="2021" value="2017" />
+
         
     </div>
     <div class="container">
