@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="description" content="Data Visualization" />
     <meta name="keywords" content="HTML, CSS, D3" />
-    <meta name="author" content="Garrich F H" />
+    <meta name="author" content="Axel Matthew Winjoto" />
+    <meta name="author" content="Garrich Farrell Hardjojuwono" />
 
     <title>Line Chart</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -13,21 +14,22 @@
     <script src="https://cdn.jsdelivr.net/npm/selectize@0.12.6/dist/js/standalone/selectize.min.js"></script>
     <link rel="stylesheet" href="line.css">
     <script src="line.js"></script>
+    <link rel="stylesheet" href="essential.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/selectize@0.12.6/dist/css/selectize.bootstrap3.css" />
 </head>
 </head>
 
+<nav>
+    <div class="left">
+        <a>Inflow of Foreign Doctors</a>
+    </div>
+    <div class="right">
+        <a class="hyper" href="index.html">Home</a>
+        <a class="hyper" href="chloropleth.html">Map</a>
+        <a class="hyper" href="line.html" style="color: black; font-weight: bolder;">Line Chart</a>
+    </div>
+</nav>
 <body>
-    <nav>
-        <div class="left">
-            <a>Inflow of foreign doctors</a>
-        </div>
-        <div class="right">
-            <a href="index.html" >Home</a>
-            <a href="chloropleth.html">Map</a>
-            <a href="line.html" style="color: red;">Line Chart</a>
-        </div>
-    </nav>
 
     <h2>Line Chart ( GDP Spending % in Health )</h2>
     <div id="container">
@@ -46,10 +48,12 @@
         </div>
     </div>
     <div id="tooltip" class="tooltip" style="opacity: 0;"></div>
-
-    <footer style="color:grey">COS30045 Data Visualization<br>
-        Garrich Farrell Hardjojuwono</footer>
-
 </body>
+
+<div class="footer-basic">
+    <footer>
+        <p class="copyright">Garrich Farrell Hardjojuwono & Axel Matthew Winjoto © 2024</p>
+    </footer>
+</div>
 
 </html>

@@ -1,197 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Data Visualisation" />
     <meta name="keywords" content="HTML, CSS, D3" />
     <meta name="author" content="Axel Matthew Winjoto" />
-
+    <meta name="author" content="Garrich Farrell Hardjojuwono" />
     <title>Choropleth and Bar Chart</title>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="chloropleth.js"></script>
     <script src="year.js"></script>
-
-    <style>
-body {
-            background-color: #FFEED2;
-            color: black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-        }
-
-        nav {
-            width: 100%;
-            background-color: #807768;
-            overflow: hidden;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav a {
-            font-family: "Arial";
-            font-size: 28px;
-            color: #FFF8DC;
-            text-align: center;
-            padding: 20px 16px;
-            text-decoration: none;
-        }
-
-        .hyper:hover {
-            color: red;
-        }
-
-        .container {
-            display: flex;
-            width: 100%;
-            max-width: 1200px;
-            margin: auto;
-            justify-content: space-between;
-            margin-top: 60px; /* Adjust for fixed nav bar height */
-        }
-
-        #map {
-            flex: 1;
-            height: 500px;
-            min-width: 700px; /* Ensures the map container doesn't shrink too much */
-            position: relative;
-        }
-
-        #chart {
-            width: 45%;
-            height: auto;
-        }
-
-        #dotted-border {
-            border: 5px double black;
-        }
-
-        .bar {
-            fill: #EB3D00;
-        }
-
-        .label {
-            fill: black;
-        }
-
-        #slider-container {
-            margin: 20px;
-        }
-
-        #year-slider {
-            width: 300px;
-        }
-
-        .right {
-            display: flex;
-            gap: 16px;
-            margin-right: 250px; 
-        }
-        
-        .left {
-            margin-left: 250px; 
-        }
-
-        .tooltip {
-            position: absolute;
-            text-align: center;
-            width: 60px;
-            height: 28px;
-            padding: 2px;
-            font: 10px sans-serif;
-            background: #EB3D00;
-            border: 0px;
-            border-radius: 8px;
-            pointer-events: none;  
-            opacity: 0;            
-        }
-
-        footer {
-            color: grey;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .country-label {
-            pointer-events: none; 
-            opacity: 0.8; 
-            font-family: 'Lobster', cursive;
-        }
-
-        .slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 15px;
-            border-radius: 5px;  
-            background: black;
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: opacity 0.2s;
-            transition: opacity 0.2s;
-        }
-        
-        .slider:hover {
-            opacity: 1; /* Increase opacity on hover for better visibility */
-        }
-        
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%; 
-            background: #EB3D00;
-            cursor: pointer;
-            -webkit-transition: background 0.2s;
-            transition: background 0.2s;
-        }
-        
-        .slider::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #EB3D00;
-            cursor: pointer;
-            -webkit-transition: background 0.2s;
-            transition: background 0.2s;
-        }
-        .slider::-webkit-slider-thumb:hover,
-.slider::-moz-range-thumb:hover {
-    background: #FF5733; /* Change thumb color on hover for better feedback */
-}
-
-    </style>
+    <link rel="stylesheet" href="essential.css">
+    <link rel="stylesheet" href="map.css">
 </head>
+<nav>
+    <div class="left">
+        <a>Inflow of Foreign Doctors</a>
+    </div>
+    <div class="right">
+        <a class="hyper" href="index.html">Home</a>
+        <a class="hyper" href="chloropleth.html" style="color: black; font-weight: bolder;">Map</a>
+        <a class="hyper" href="line.html">Line Chart</a>
+    </div>
+</nav>
+
 <body>
-    <nav>
-        <div class="left">
-        <a>Inflow of foreign doctors</a>
-        </div>
-        <div class="right">
-            <a class = "hyper" href="index.html">Home</a>
-            <a class = "hyper" href="chloropleth.html" style="color: red;">Map</a>
-            <a class = "hyper" href="line.html">Line Chart</a>
-        </div>
-    </nav>
 
     <h1>Map and Inflow of Foreign Doctors to OECD countries</h1>
     <div id="slider-container">
         <label for="year-slider">Year: <span id="selected-year">2017</span></label>
         <input class="slider" type="range" id="year-slider" min="2010" max="2021" value="2017" />
 
-        
+
     </div>
     <div class="container">
         <div id="map" class="dotted-border"></div>
         <div id="chart" class="dotted-border"></div>
     </div>
-    
-    <footer>COS30045 Data Visualisation <br> Axel Matthew Winjoto</footer>
 </body>
+
+<div class="footer-basic">
+    <footer>
+        <p class="copyright">Garrich Farrell Hardjojuwono & Axel Matthew Winjoto © 2024</p>
+    </footer>
+</div>
 </html>

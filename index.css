@@ -1,0 +1,73 @@
+.text-image {
+    display:flex;
+    justify-content: space-around;
+    margin: 0;
+}
+
+.text {
+    width: 50%;
+    margin-left: 5%;
+}
+.text-column{
+    height:100%;
+    background-color: white;
+    padding: 40px 40px 40px;
+    border-radius: 30px 30px 0 0;
+}
+.text-column p, .text-column ul{
+    font-size: 16px;
+}
+.text-image .image {
+    width: 50%;
+    margin-top: 150px;
+}
+
+.image img {
+    width: 100%;
+}
+
+.questions {
+    width: 100%;
+    background-color: #807768;
+
+}
+.questions .questionBody{
+    margin-left: 5%;
+}
+
+.qlist {
+    padding: 10px;
+    color: #FFF8DC;
+}
+
+.visualizations {
+    display: flex;
+    justify-content: space-around;
+}
+
+.visualization {
+    padding: 20px;
+    width: 100%;
+    background-color: #FFEED2;
+    text-align: center;
+}
+
+/* .visualization:hover {
+    padding: 5px 5px 5px 5px;
+    transition: 0.2s;
+} */
+
+.visualization img {
+    width: 90%;
+    box-shadow: 0 0 10px black;
+    transition: transform 0.3s ease-in-out;
+}
+
+.visualization img:hover {
+    transform: scale(1);
+    width: 95%;
+    box-shadow: 0 0 25px #EB3D00;
+    z-index: 1000;
+}
+
+/* Credit to https://epicbootstrap.com/snippets/footer-basic */

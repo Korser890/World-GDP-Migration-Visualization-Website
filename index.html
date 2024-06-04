@@ -6,149 +6,33 @@
     <meta name="description" content="Data Visualisation" />
     <meta name="keywords" content="HTML, CSS, D3" />
     <meta name="author" content="Axel Matthew Winjoto" />
+    <meta name="author" content="Garrich Farrell Hardjojuwono" />
+    <link rel="stylesheet" href="essential.css">
+    <link rel="stylesheet" href="index.css">
 
     <title>Choropleth and Bar Chart</title>
 
-    <style>
-        body {
-            background-color: #FFEED2;
-            color: black;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-        }
-
-        nav {
-            width: 100%;
-            background-color: #807768;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav a {
-            font-family: "Arial";
-            font-size: 28px;
-            color: #FFF8DC;
-            text-align: center;
-            padding: 20px 16px;
-            text-decoration: none;
-        }
-
-        .hyper:hover {
-            color: red;
-        }
-
-        .right {
-            display: flex;
-            gap: 16px;
-            margin-right: 250px;
-        }
-
-        .left {
-            margin-left: 250px;
-        }
-
-        footer {
-            color: grey;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        h1 {
-            font-family: 'Lobster', cursive;
-            font-size: 36px;
-            margin: 20px 0;
-        }
-
-        .text-image {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px;
-        }
-
-        .text {
-            width: 50%;
-            margin-left: 5%;
-        }
-
-        .image {
-            width: 50%;
-        }
-
-        .image img {
-            width: 80%;
-            height: auto;
-            margin-left: 15%;
-            margin-right: auto;
-        }
-
-        .questions {
-            width: 100%;
-            background-color: #807768;
-
-        }
-
-        .qlist {
-            color: #FFF8DC;
-        }
-
-        .visualizations {
-            display: flex;
-            justify-content: space-around;
-            /* margin: 20px; */
-        }
-
-        .visualization {
-            margin-top: 15px;
-            width: 100%;
-            background-color: #FFEED2;
-            padding: 15p 15px 15px 15px;
-            text-align: center;
-        }
-
-        .visualization:hover {
-            padding: 5px 5px 5px 5px;
-            transition: 0.2s;
-        }
-
-
-        .visualization img {
-            width: 90%;
-            box-shadow: 0 0 10px black;
-        }
-
-        .visualization img:hover {
-            transition: 0.2s;
-            width: 95%;
-            box-shadow: 0 0 25px #EB3D00;
-        }
-    </style>
 </head>
 
+<nav>
+    <div class="left">
+        <a>Inflow of Foreign Doctors</a>
+    </div>
+    <div class="right">
+        <a class="hyper" href="index.html" style="color: black; font-weight: bolder;">Home</a>
+        <a class="hyper" href="chloropleth.html">Map</a>
+        <a class="hyper" href="line.html">Line Chart</a>
+    </div>
+</nav>
+
 <body>
-    <nav>
-        <div class="left">
-            <a id="inflowtext">Inflow of foreign doctors</a>
-        </div>
-        <div class="right">
-            <a class="hyper" href="index.html" style="color: red;">Home</a>
-            <a class="hyper" href="chloropleth.html">Map</a>
-            <a class="hyper" href="line.html">Line Chart</a>
-        </div>
-    </nav>
-
-
 
     <section class="text-image">
         <div class="text">
             <header>
                 <h1>Extended Insights into Healthcare Workforce Migration</h1>
             </header>
+            <section class="text-column">
             <section>
                 <h2>Purpose of the visualizations in the website</h2>
                 <p>This website aims to provide visualization and insights on the influx of foreign-trained doctors and
@@ -188,9 +72,10 @@
                         professionals can highlight networking and collaboration opportunities.</li>
                 </ul>
             </section>
+        </section>
         </div>
         <div class="image">
-            <img src="pics/dr.png" alt="Example Image">
+            <img src="pics/dr.png" alt="Doctor Image">
         </div>
     </section>
 
@@ -198,7 +83,7 @@
         <div class="questionBody">
             <h2 class="qlist">Questions the visualization aims to answer:</h2>
             <ul>
-                <li class="qlist">Is there a correlation between a country’s healthcare GDP spending and the number of
+                <li class="qlist">Is there a correlation between a country's healthcare GDP spending and the number of
                     inflows of foreign doctors towards the country? </li>
                 <li class="qlist">Were there any changes in the rate of inflow of foreign doctors in each country
                     between pre-covid and post-covid? </li>
@@ -217,7 +102,11 @@
         </div>
     </section>
 
-    <footer>COS30045 Data Visualisation <br> Axel Matthew Winjoto</footer>
 </body>
+<div class="footer-basic">
+    <footer>
+        <p class="copyright">Garrich Farrell Hardjojuwono & Axel Matthew Winjoto © 2024</p>
+    </footer>
+</div>
 
 </html>
