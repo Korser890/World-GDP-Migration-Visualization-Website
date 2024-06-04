@@ -83,9 +83,10 @@ h1 {
     text-align: center;
     padding: 8px;
     font-size: 12px;
-    background: lightsteelblue;
-    border: 1px solid #000;
+    background: #EB3D00;
+    border: 2px solid white;
     border-radius: 4px;
+    color: white;
     pointer-events: none;
 }
 
@@ -96,7 +97,12 @@ h1 {
     padding: 10px;
     color: white;
     transition: 0.4s;
-    background-color: #49a4ff;
+    background-color: #EB3D00;
+}
+#show-best-worst:hover,
+#show-top-three:hover,
+#show-bot-three:hover {
+    background-color: #9b2900; /* Darker shade on hover */
 }
 
 #show-best-worst.clicked,
@@ -104,7 +110,7 @@ h1 {
 #show-bot-three.clicked {
     color: white;
     transition: 0.4s;
-    background-color: #20476d;
+    background-color: #721f00;
 }
 
 
