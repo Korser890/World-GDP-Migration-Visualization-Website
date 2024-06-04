@@ -89,29 +89,79 @@ function init() {
         const yAxis = d3.axisLeft(yScale).ticks(number_of_ticks);
 
         // Draw X Axis
-        svg.append("g").attr("class", "x axis").attr("transform", `translate(0,${h})`).call(xAxis);
-        // Draw Y Axis
-        svg.append("g").attr("class", "y axis").call(yAxis);
-        // Draw X Axis label
-        svg.append("text").attr("class", "axis-label").attr("x", w / 2).attr("y", h + 40)
-            .style("text-anchor", "middle").text("Year");
-        // Draw Y Axis label
-        svg.append("text").attr("class", "axis-label").attr("transform", "rotate(-90)")
-            .attr("x", -h / 2).attr("y", -40)
-            .style("text-anchor", "middle").text("GDP (%)");
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", `translate(0,${h})`)
+            .call(xAxis)
+            .style("font-size", "16px");
 
-        // Dotted Line
+        // Draw Y Axis
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+            .style("font-size", "16px");
+
+        // Draw X Axis label
+        svg.append("text")
+            .attr("class", "axis-label")
+            .attr("x", w / 2)
+            .attr("y", h + 40)
+            .style("text-anchor", "middle")
+            .text("Year")
+            .style("font-size", "16px")
+            .style("font-weight", "bold");
+
+        // Draw Y Axis label
+        svg.append("text")
+            .attr("class", "axis-label")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -h / 2).attr("y", -40)
+            .style("text-anchor", "middle")
+            .text("GDP (%)")
+            .style("font-size", "16px")
+            .style("font-weight", "bold");
+
+        // Add a vertical line for the year 2020 to indicate the impact of COVID-19
         svg.append("line")
-            .attr("class", "line halfMilMark")
-            //start of line
             .attr("x1", xScale(2020))
             .attr("y1", 0)
-            //end of line
             .attr("x2", xScale(2020))
             .attr("y2", h)
-            .style("stroke", "red")
-            // Set the line to be dotted
-            .style("stroke-dasharray", "3,3");
+            .attr("stroke", "red")
+            .attr("stroke-width", 2)
+            .style("stroke-dasharray", ("2, 5"))  // Dashed line format
+            .style("opacity", 0.8);  // Optional: set opacity for styling
+
+        // Add label at the top of the COVID-19 line
+        svg.append("text")
+            .attr("x", xScale(2020))
+            .attr("y", -10) // Adjust this value to position the text appropriately
+            .attr("fill", "red")
+            .attr("text-anchor", "middle") // Ensures the text is centered on the line
+            .style("font-size", "16px") // Adjust font size as needed
+            .text("COVID-19");
+
+        // Compute the average GDP for each year across all countries
+        function calculateAverageData() {
+            const yearMap = {};
+            // Initialize year map
+            countries.forEach(country => {
+                transformedData[country].forEach(d => {
+                    if (!yearMap[d.year]) yearMap[d.year] = [];
+                    yearMap[d.year].push(d.value);
+                });
+            });
+
+            const averageData = Object.keys(yearMap).map(year => {
+                const averages = yearMap[year];
+                return {
+                    year: +year,
+                    value: d3.mean(averages) // Calculate average using d3.mean
+                };
+            });
+
+            return averageData;
+        }
 
         const line = d3.line()
             .x(d => xScale(d.year))
@@ -141,24 +191,6 @@ function init() {
 
                 const totalLength = path.node().getTotalLength();
 
-                const appendLabel = (text, x, y, color, delay) => {
-                    try {
-                        console.log("Append Label")
-                        svg.append("text")
-                            .attr("class", "label")
-                            .attr("x", x)
-                            .attr("y", y)
-                            .attr("fill", color)
-                            .text(text)
-                            .style("opacity", 0) // Start with opacity 0
-                            .transition()
-                            .duration(200)
-                            .delay(delay) // Delay the label transition until the line is drawn
-                            .style("opacity", 1); // Transition to opacity 1
-                    } catch (error) {
-                        console.error("Failed to append label: ", error);
-                    }
-                };
 
                 path.attr("stroke-dasharray", `${totalLength} ${totalLength}`)
                     .attr("stroke-dashoffset", totalLength)
@@ -199,7 +231,7 @@ function init() {
                             selectedCountry = country;
                             const xPos = xScale(countryData[countryData.length - 1].year) + 10;
                             // console.log(xPos)
-                            const yPos = yScale(countryData[countryData.length - 1].value);
+                            const yPos = yScale(countryData[countryData.length - 1].value) + 5;
                             svg.selectAll(".label").remove();
                             appendLabel(selectedCountry, xPos, yPos, colorScale(country), 0)
                             svg.selectAll(".line")
@@ -207,6 +239,25 @@ function init() {
                                 .classed("selected", d => d === countryData);
                         }
                     });
+                const appendLabel = (text, x, y, color, delay) => {
+                    try {
+                        console.log("Append Label")
+                        svg.append("text")
+                            .attr("class", "label")
+                            .attr("x", x)
+                            .attr("y", y)
+                            .attr("fill", color)
+                            .style("font-size", "16px")
+                            .text(text)
+                            .style("opacity", 0) // Start with opacity 0
+                            .transition()
+                            .duration(200)
+                            .delay(delay) // Delay the label transition until the line is drawn
+                            .style("opacity", 1); // Transition to opacity 1
+                    } catch (error) {
+                        console.error("Failed to append label: ", error);
+                    }
+                };
 
                 if (highlight) {
                     const color = country === highlight.bestCountry ? "green" : country === highlight.worstCountry ? "red" : colorScale(country);
@@ -226,8 +277,43 @@ function init() {
                         appendLabel(`${country} (GDP: ${highlight.thirdScore})`, xPos, yPos, color, delayForPathDraw);
                     }
                 }
+                drawAveragePath();
             });
         };
+
+        // Function to draw the average GDP path
+        const drawAveragePath = () => {
+            const averageData = calculateAverageData();
+
+            const averageLine = d3.line()
+                .x(d => xScale(d.year))
+                .y(d => yScale(d.value));
+
+            // Ensure any existing average line is removed before drawing a new one
+            svg.selectAll(".average-line").remove();
+
+            // Append the average GDP path
+            svg.append("path")
+                .datum(averageData) // Bind average data to the path
+                .attr("class", "average-line")
+                .attr("d", averageLine)
+                .attr("fill", "none")
+                .attr("stroke", "#f9926e") // Choose a distinct color for the average
+                .attr("stroke-width", 2)
+                .style("stroke-dasharray", ("15, 5")); // Optional: make it dashed
+
+            // Optionally add a label for the average line
+            svg.append("text")
+                .attr("x", xScale(averageData[averageData.length - 1].year) + 10)
+                .attr("y", yScale(averageData[averageData.length - 1].value) + 5)
+                .attr("text-anchor", "start") // Anchor text at the start of the text element
+                .style("fill", "#f9926e")
+                .style("font-size", "16px") // Adjust font size as needed
+                .style("font-weight", "normal") // Ensure the font weight is normal
+                .style("text-rendering", "optimizeLegibility")
+                .text("AVERAGE GDP");
+        };
+
 
         // Functions for the buttons
 

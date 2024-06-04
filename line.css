@@ -96,6 +96,7 @@ h1 {
     border-radius: 10px;
     padding: 10px;
     color: white;
+    font-size: 16px;
     transition: 0.4s;
     background-color: #EB3D00;
 }
@@ -112,7 +113,10 @@ h1 {
     transition: 0.4s;
     background-color: #721f00;
 }
-
+#buttons p, #controls p{
+    font-size: 16px;
+    margin-top: 0;
+}
 
 #info {
     margin-left: 20px;
