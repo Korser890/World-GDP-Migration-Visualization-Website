@@ -32,27 +32,25 @@
 
         nav a {
             font-family: 'Lobster', cursive;
-            font-size: 20px; /* Increase font size */
+            font-size: 20px;
             color: #FFF8DC;
             text-align: center;
             padding: 20px 16px;
             text-decoration: none;
         }
 
-
         .hyper:hover {
-            color: #E6E6FA;  
+            color: #E6E6FA;
         }
 
         .right {
             display: flex;
             gap: 16px;
-            margin-right: 250px; 
-            
+            margin-right: 250px;
         }
-        
+
         .left {
-            margin-left: 250px; 
+            margin-left: 250px;
         }
 
         footer {
@@ -66,22 +64,122 @@
             font-size: 36px;
             margin: 20px 0;
         }
+
+        .text-image {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px;
+        }
+
+        .text {
+            width: 50%;
+            margin-left: 5%;
+        }
+
+        .image {
+            width: 50%;
+        }
+
+        .image img {
+            width: 80%;
+            height: auto;
+            margin-left: 15%;
+            margin-right: auto;
+        }
+
+        .questions {
+            width: 100%;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin-left: auto;
+
+        }
+
+        .visualizations {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px;
+        }
+
+        .visualization {
+            width: 100%;
+            background-color: #ddd;
+            padding: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
     <nav>
         <div class="left">
-        <a id = "inflowtext">Inflow of foreign doctors</a>
+            <a id="inflowtext">Inflow of foreign doctors</a>
         </div>
         <div class="right">
-            <a class = "hyper" href="index.html">Home</a>
-            <a class = "hyper" href="chloropleth.html">Map</a>
-            <a class = "hyper" href="line.html">Line Chart</a>
+            <a class="hyper" href="index.html">Home</a>
+            <a class="hyper" href="chloropleth.html">Map</a>
+            <a class="hyper" href="line.html">Line Chart</a>
         </div>
     </nav>
 
-    <h1>Migration Inflow of Foreign Doctors</h1>
+
+
+    <section class="text-image">
+        <div class="text">
+            <header>
+                <h1>Extended Insights into Healthcare Workforce Migration</h1>
+            </header>
+            <section>
+                <h2>Implications of Healthcare Workforce Migration</h2>
+                <p>Healthcare workforce migration has significant implications for both the countries that healthcare workers leave and the countries they move to:</p>
+                <ul>
+                    <li><strong>Impact on Origin Countries:</strong> Developing countries often face the 'brain drain' phenomenon, where the emigration of skilled healthcare workers leads to a shortfall in quality healthcare delivery and increases the burden on remaining workers.</li>
+                    <li><strong>Impact on Destination Countries:</strong> While developed countries benefit from the influx of skilled workers, this can lead to oversaturation in some areas, and potential underutilization of migrant healthcare skills due to credential recognition issues.</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Features of the Visualization Tool</h2>
+                <p>A comprehensive visualization tool designed for healthcare workforce migration would feature several key components:</p>
+                <ul>
+                    <li><strong>Interactive Maps:</strong> Show global migration flows and statistics, allowing users to explore different regions and countries to understand the extent of migration.</li>
+                    <li><strong>Career Opportunities:</strong> Highlight regions with high demand for specific healthcare skills and show expected salaries and living conditions.</li>
+                    <li><strong>Educational Resources:</strong> Provide information on continuing education and certification requirements in different countries.</li>
+                    <li><strong>Policy Impact Analysis:</strong> Display the effects of immigration policies on the healthcare sector, helping students and professionals plan strategically.</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Benefits of the Visualization Tool</h2>
+                <p>This visualization tool would offer several benefits to healthcare students and professionals planning their careers:</p>
+                <ul>
+                    <li><strong>Informed Decision Making:</strong> Access to comprehensive, up-to-date data aids in making informed decisions about where to pursue career opportunities.</li>
+                    <li><strong>Strategic Planning:</strong> Understanding global trends helps in planning long-term career paths and professional development.</li>
+                    <li><strong>Networking Opportunities:</strong> Identifying regions with a high influx of professionals can highlight networking and collaboration opportunities.</li>
+                </ul>
+            </section>
+        </div>
+        <div class="image">
+            <img src="dr.png" alt="Example Image">
+        </div>
+    </section>
+
+    <section class="questions">
+        <h2>Three Questions to Answer</h2>
+        <ul>
+            <li>Question 1?</li>
+            <li>Question 2?</li>
+            <li>Question 3?</li>
+        </ul>
+    </section>
+
+    <section class="visualizations">
+        <div class="visualization">
+            Screenshot Visualization 1
+        </div>
+        <div class="visualization">
+            Screenshot Visualization 2
+        </div>
+    </section>
+
     <footer>COS30045 Data Visualisation <br> Axel Matthew Winjoto</footer>
 </body>
 
