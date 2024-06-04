@@ -88,13 +88,13 @@ h1 {
 }
 
 #buttons {
-    margin-right: 20px; /* Adjust the margin as needed */
+    margin-right: 50px; /* Adjust the margin as needed */
 }
 
 #controls {
-    margin-left: 20px; /* Adjust the margin as needed */
+    margin-right: 150px; 
 }
 
 .selectize-control {
-    width: 350px; /* Set your desired width */
+    width: 500px; /* Set your desired width */
 }

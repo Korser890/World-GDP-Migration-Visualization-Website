@@ -1,7 +1,7 @@
 .container {
-    display: flex;
+    display: flex;   
     width: 100%;
-    max-width: 1200px;
+    /* max-width: 1200px; */
     margin: auto;
     justify-content: space-between;
     margin-top: 60px;
@@ -9,16 +9,18 @@
 }
 
 #map {
-    flex: 1;
-    height: 500px;
-    min-width: 700px;
+    /* flex: 1;
+    height: 600px; */
+    /* min-width: 700px; */
+    margin-left: 2%;
+    /* margin-right: 5%; */
     /* Ensures the map container doesn't shrink too much */
-    position: relative;
+    /* position: relative; */
 }
 
 #chart {
-    width: 45%;
-    height: auto;
+    margin-right: 5%;
+    /* margin-left: 5%; */
 }
 
 #dotted-border {

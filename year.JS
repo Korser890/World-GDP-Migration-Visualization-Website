@@ -1,7 +1,8 @@
+var barMargin = { top: 30, right: 30, bottom: 70, left: 60 },
+    barWidth = (window.innerHeight * 0.65)  - barMargin.left - barMargin.right,
+    barHeight = (window.innerHeight * 0.7)  - barMargin.top - barMargin.bottom;
+    
 function initializeChart(years, country) {
-    var barMargin = { top: 30, right: 30, bottom: 70, left: 60 },
-        barWidth = 550 - barMargin.left - barMargin.right,
-        barHeight = 520 - barMargin.top - barMargin.bottom;
 
     var barSvg = d3.select("#chart")
         .append("svg")
@@ -34,6 +35,7 @@ function initializeChart(years, country) {
     barSvg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + barHeight + ")")
+        .style("font-size", "16px")
         .call(d3.axisBottom(xScale))
         .selectAll("text")
         .attr("transform", "translate(-10,0)rotate(-45)")
@@ -41,7 +43,8 @@ function initializeChart(years, country) {
 
     barSvg.append("g")
         .attr("class", "y axis")
-        .call(d3.axisLeft(yScale));
+        .call(d3.axisLeft(yScale))
+        .style("font-size", "16px");
 
     return { barSvg, xScale, yScale, barHeight, barWidth, barMargin };
 }
@@ -127,11 +130,10 @@ function drawGraph(country) {
         } else {
             var scales = {
                 barSvg: d3.select("#bar-svg g"),
-                xScale: d3.scaleBand().domain(years).range([0, 550 - 60 - 30]).padding(0.2),
-                yScale: d3.scaleLinear().domain([0, 13000]).range([520 - 30 - 70, 0]),
-                barHeight: 520 - 30 - 70,
-                barWidth: 550 - 60 - 30,
-                barMargin: { top: 30, right: 30, bottom: 70, left: 60 }
+                xScale: d3.scaleBand().domain(years).range([0, barWidth]).padding(0.2),
+                yScale: d3.scaleLinear().domain([0, 13000]).range([barHeight, 0]),
+                barWidth : barWidth,
+                barHeight: barHeight
             };
         }
 
