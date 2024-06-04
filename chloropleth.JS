@@ -77,8 +77,8 @@ function init() {
                                 .duration(200)
                                 .style("opacity", 0.9);
                             tooltip.html(countryName)
-                                .style("left", (coords[0]+100) + "px")
-                                .style("top", (coords[1]+200) + "px");
+                                .style("left", (coords[0]+50) + "px")
+                                .style("top", (coords[1]+250) + "px");
                         }
                     })
                 var legendWidth = 300;
