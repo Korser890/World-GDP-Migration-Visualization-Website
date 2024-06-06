@@ -107,3 +107,7 @@
     background: #FF5733;
     /* Change thumb color on hover for better feedback */
 }
+#instructions {
+    margin: 20px auto;
+    color: #EB3D00;
+}

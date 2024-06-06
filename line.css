@@ -98,3 +98,7 @@ h1 {
 .selectize-control {
     width: 500px; /* Set your desired width */
 }
+#instructions {
+    margin: 20px auto;
+    color: #EB3D00;
+}
