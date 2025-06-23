@@ -1,4 +1,3 @@
-# DV_Assignment
-This repository is for the Data Visualisation Assignment in Semester 1 2024
+Interactive data visualizations of global GDP and migration inflows using D3.js, including a choropleth map and line chart based on real-world economic data.
 
 
